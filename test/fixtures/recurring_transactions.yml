@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  financial_transaction: one
+  user: one
+  recurrence_pattern: MyString
+  recurrence_interval: 1
+  start_date: 2024-10-04
+  end_date: 2024-10-04
+  last_occurrence: 2024-10-04
+
+two:
+  financial_transaction: two
+  user: two
+  recurrence_pattern: MyString
+  recurrence_interval: 1
+  start_date: 2024-10-04
+  end_date: 2024-10-04
+  last_occurrence: 2024-10-04
