@@ -46,3 +46,5 @@ gem "rack-cors", "~> 2.0"
 gem "devise"
 gem "devise-jwt"
 gem "jsonapi-serializer"
+
+gem "faker", "~> 3.4"
