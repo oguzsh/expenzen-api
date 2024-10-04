@@ -10,9 +10,58 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_04_084953) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_04_112443) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accounts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name"
+    t.decimal "balance"
+    t.string "account_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_accounts_on_user_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name"
+    t.string "category_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_categories_on_user_id"
+  end
+
+  create_table "recurring_transactions", force: :cascade do |t|
+    t.bigint "transaction_id", null: false
+    t.bigint "user_id", null: false
+    t.string "recurrence_pattern"
+    t.integer "recurrence_interval"
+    t.date "start_date"
+    t.date "end_date"
+    t.date "last_occurrence"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["transaction_id"], name: "index_recurring_transactions_on_transaction_id"
+    t.index ["user_id"], name: "index_recurring_transactions_on_user_id"
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "account_id", null: false
+    t.bigint "category_id", null: false
+    t.decimal "amount"
+    t.string "transaction_type"
+    t.text "description"
+    t.datetime "date"
+    t.boolean "is_recurring"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_transactions_on_account_id"
+    t.index ["category_id"], name: "index_transactions_on_category_id"
+    t.index ["user_id"], name: "index_transactions_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -28,4 +77,12 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_04_084953) do
     t.index ["jti"], name: "index_users_on_jti", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "accounts", "users"
+  add_foreign_key "categories", "users"
+  add_foreign_key "recurring_transactions", "transactions"
+  add_foreign_key "recurring_transactions", "users"
+  add_foreign_key "transactions", "accounts"
+  add_foreign_key "transactions", "categories"
+  add_foreign_key "transactions", "users"
 end

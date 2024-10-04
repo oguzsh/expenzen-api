@@ -1,7 +1,7 @@
 class RecurringTransaction < ApplicationRecord
   RECURRENCE_PATTERNS = %w[daily weekly monthly yearly].freeze
 
-  belongs_to :financial_transaction, class_name: "Transaction"
+  belongs_to :financial_transaction, class_name: 'Transaction', foreign_key: 'transaction_id'
   belongs_to :user
 
   validates :recurrence_pattern, presence: true, inclusion: { in: RECURRENCE_PATTERNS }
